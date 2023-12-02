@@ -1,2 +1,4 @@
 # Session cookie to obtain user-specific puzzle input.
 cookie
+
+__pycache__
