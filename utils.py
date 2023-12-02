@@ -13,4 +13,5 @@ def read_input(day: int) -> bytes:
         "https://adventofcode.com/2023/day/{0}/input".format(day)
     )
     request.add_header("Cookie", _get_session_cookie())
-    return urllib.request.urlopen(request).read()
+    response = urllib.request.urlopen(request)
+    return response.read().decode("utf-8")
