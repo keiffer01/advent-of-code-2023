@@ -15,7 +15,6 @@ def _is_valid_part_number(schematic: list[str], row: int,
         return True
     return False
 
-
 def part1_solution():
     schematic = utils.read_input(day=3).splitlines()
     sum = 0
