@@ -13,7 +13,7 @@ CARD_STRENGTH_MAP = {
     "8": 6,
     "9": 7,
     "T": 8,
-    "J": 9,
+    "J": -1,
     "Q": 10,
     "K": 11,
     "A": 12
@@ -44,6 +44,11 @@ class Hand:
 
     def get_hand_type(self) -> HandType:
         card_counts = collections.Counter(self.cards)
+        if "J" in card_counts and card_counts["J"] < 5:
+            j_count = card_counts["J"]
+            del card_counts["J"]
+            highest_card = max(card_counts, key=card_counts.get)
+            card_counts[highest_card] += j_count
         if len(card_counts.keys()) == 1:
             return HandType.FIVE_OF_A_KIND
         elif (len(card_counts.keys()) == 2 and
@@ -82,7 +87,16 @@ class Hand:
         self.cards == other.cards
 
 
+# Need to change CARD_STRENGTH_MAP for this to work properly.
 def part1_solution():
+    hands = [Hand(line) for line in utils.read_input(day=7).splitlines()]
+    hands.sort()
+    result = 0
+    for i, hand in enumerate(hands):
+        result += hand.bid * (i + 1)
+    return result
+
+def part2_solution():
     hands = [Hand(line) for line in utils.read_input(day=7).splitlines()]
     hands.sort()
     result = 0
